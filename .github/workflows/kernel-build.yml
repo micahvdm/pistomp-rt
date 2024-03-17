@@ -66,7 +66,6 @@ jobs:
           export DTS_SUBDIR=broadcom
           export IMAGE=zImage
         fi
-        make O=${{github.workspace}}/build ${{matrix.defconfig}}
         scripts/config --file ${{github.workspace}}/build/${{matrix.config}} --set-val CONFIG_WERROR y
         make O=${{github.workspace}}/build -j ${{env.NUM_JOBS}} $IMAGE modules dtbs
         mkdir -p ${{github.workspace}}/install/boot/overlays
