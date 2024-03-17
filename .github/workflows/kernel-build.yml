@@ -64,7 +64,7 @@ jobs:
           export DTS_SUBDIR=broadcom
           export IMAGE=zImage
         fi
-        cp ${{github.workspace}}/${{matrix.config}} ${{github.workspace}}/build/.config
+        mv ${{github.workspace}}/${{matrix.config}} ${{github.workspace}}/build/.config
         make O=${{github.workspace}}/build -j ${{env.NUM_JOBS}} $IMAGE modules dtbs
         mkdir -p ${{github.workspace}}/install/boot/overlays
         make O=${{github.workspace}}/build INSTALL_MOD_PATH=${{github.workspace}}/install modules_install
