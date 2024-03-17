@@ -20,39 +20,16 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: bcm2835
-            arch: arm
-            defconfig: bcm2835_defconfig
-            kernel: kernel
-
-          - name: arm64
-            arch: arm64
-            defconfig: defconfig
-            kernel: kernel8
-
-          - name: bcmrpi
-            arch: arm
-            defconfig: bcmrpi_defconfig
-            kernel: kernel
-
-          - name: bcm2709
-            arch: arm
-            defconfig: bcm2709_defconfig
-            kernel: kernel7
-
-          - name: bcm2711
-            arch: arm
-            defconfig: bcm2711_defconfig
-            kernel: kernel7l
-
           - name: bcm2711_arm64
             arch: arm64
             defconfig: bcm2711_defconfig
+            config: 2711-rt.config
             kernel: kernel8
 
           - name: bcm2712
             arch: arm64
             defconfig: bcm2712_defconfig
+            config: 2712-rt.config
             kernel: kernel_2712
 
     steps:
@@ -87,7 +64,7 @@ jobs:
           export DTS_SUBDIR=broadcom
           export IMAGE=zImage
         fi
-        make O=${{github.workspace}}/build ${{matrix.defconfig}}
+        make O=${{github.workspace}}/build ${{matrix.config}}
         scripts/config --file ${{github.workspace}}/build/.config --set-val CONFIG_WERROR y
         make O=${{github.workspace}}/build -j ${{env.NUM_JOBS}} $IMAGE modules dtbs
         mkdir -p ${{github.workspace}}/install/boot/overlays
