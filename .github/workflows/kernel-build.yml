@@ -54,6 +54,8 @@ jobs:
     - name: Build kernel ${{matrix.name}}
       run: |
         mkdir ${{github.workspace}}/build
+        cp ${{github.workspace}}/2711-rt.config ${{github.workspace}}/build
+        cp ${{github.workspace}}/2712-rt.config ${{github.workspace}}/build
         export ARCH=${{matrix.arch}}
         if [[ "$ARCH" == "arm64" ]]; then
           export CROSS_COMPILE=aarch64-linux-gnu-
